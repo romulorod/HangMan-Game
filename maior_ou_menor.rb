@@ -33,19 +33,18 @@ def verifica_resultado(sorteia_numero_secreto, first_try)
     acertou = first_try == sorteia_numero_secreto
 
 
-if acertou 
+  if acertou 
     puts('Parabéns, você acertou') 
     return true
-else    
-    maior = sorteia_numero_secreto > first_try
-    if maior
-        puts('Você errou, o número secreto é maior')
-        return false
-    else
+  end
+
+  maior = sorteia_numero_secreto > first_try
+  if maior
+    puts('Você errou, o número secreto é maior')
+  else
     puts('Que pena, você errou, pra mais!')
-    return false
-    end 
-end
+  end 
+  false
 end
 welcome
 sorteia_numero_secreto
