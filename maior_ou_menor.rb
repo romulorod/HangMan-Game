@@ -12,7 +12,7 @@ end
 def sorteia_numero_secreto
     puts 'Escolhendo um número secreto entre 0 e 200...'
     
-    numero_secreto = 175
+    numero_secreto = rand(200)
     
     puts 'Número escolhido, que tal adivinhar ele ?'
     numero_secreto
@@ -37,7 +37,7 @@ def verifica_resultado(sorteia_numero_secreto, first_try)
 
 
   if acertou 
-    puts('Parabéns, você acertou') 
+    puts('Parabéns, você acertou')
     return true
   end
 
@@ -53,14 +53,19 @@ end
 welcome
 sorteia_numero_secreto
 
+pontos_ate_agora = 1000
+
 limite_de_tentativas = 5
 chutes = []
 for tentativa in 1..limite_de_tentativas
 
     first_try = pede_um_numero(chutes, tentativa, limite_de_tentativas)
-
+    pontos_a_perder = (first_try - sorteia_numero_secreto).abs / 2.0
+    pontos_ate_agora -= pontos_a_perder
     chutes << first_try
 
     break if verifica_resultado(sorteia_numero_secreto, first_try)
 
 end
+
+puts("Você ganhou #{pontos_ate_agora} pontos!") 
