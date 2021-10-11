@@ -1,5 +1,15 @@
 require_relative "forca_ui"
 
+
+def escolhe_palavra_secreta
+    avisa_escolhendo_palavra
+    texto = File.read("dicionario.txt")
+    dicionario = texto.split "\n"
+    numero_escolhido = rand(dicionario.size)
+    palavra_secreta = dicionario[numero_escolhido].
+    avisa_palavra_escolhida palavra_secreta
+end
+
 def palavra_mascarada chutes, palavra_secreta
   mascara = ""
   for letra in palavra_secreta.chars

@@ -7,13 +7,14 @@ def da_boas_vindas
   nome
 end
 
-def escolhe_palavra_secreta
-  puts "Escolhendo palavra secreta"
-  palavra_secreta = "programador"
-  puts "Palavra Secreta com #{palavra_secreta.size} letras escolhida, boa sorte!"
-  palavra_secreta.upcase
+def avisa_escolhendo_palavra_secreta palavra_secreta
+    puts "Escolhendo palavra secreta"
+    palavra_secreta.upcase
 end
 
+def avisa_palavra_escolhida
+    puts "Palavra Secreta com #{palavra_secreta.size} letras escolhida, boa sorte!"
+end
 def nao_quer_jogar
   puts "Deseja jogar novamente? (S/N)"
   quero_jogar = gets.strip
