@@ -1,46 +1,38 @@
-def da_boas_vindas
-  puts "Bem Vindo ao Jogo da Forca!"
-  puts "Qual é o seu nome ?"
-  nome = gets.strip
-  puts "\n\n"
-  puts "Começaremos o jogo para você, #{nome}"
-  nome
+require_relative "forca_ui"
+
+def palavra_mascarada chutes, palavra_secreta
+  mascara = ""
+  for letra in palavra_secreta.chars
+    if chutes.include? letra
+      mascara << letra
+    else
+      mascara << "_"
+    end
+  end
+  mascara
 end
 
-def escolhe_palavra_secreta
-  puts "Escolhendo palavra secreta"
-  palavra_secreta = "programador"
-  puts "Palavra Secreta com #{palavra_secreta.size} letras escolhida, boa sorte!"
-  palavra_secreta.upcase
-end
-
-def nao_quer_jogar
-  puts "Deseja jogar novamente? (S/N)"
-  quero_jogar = gets.strip
-  nao_quer_jogar = quero_jogar.upcase == "N"
-end
-
-def pede_um_chute(chutes, erros)
-  puts "\n"
-  puts "Erros até agora: #{erros}"
-  puts "Chutes até agora: #{chutes}"
-  puts "Entre com uma letra ou uma palavra"
-  chute = gets.strip.upcase
-  puts "Será que acertou ? Você chutou #{chute.upcase}"
-  chute.upcase
+def pede_um_chute_valido(chutes, erros, mascara)
+  cabecalho chutes, erros, mascara
+  
+  loop do
+    chute = pede_um_chute
+    if chutes.include? chute
+      avisa_chute_efetuado chute
+    else
+      return chute
+    end
+  end
 end
 
 def joga(nome, palavra_secreta)
   erros = 0
   chutes = []
   pontos_ate_agora = 0
-
+#   mascara = palavra_mascarada chutes, palavra_secreta
   while erros < 5
-    chute = pede_um_chute chutes, erros
-    if chutes.include? chute
-      puts "Você já chutou essa letra/palavra."
-      next
-    end
+    mascara = palavra_mascarada chutes, palavra_secreta
+    chute = pede_um_chute_valido chutes, erros, mascara
     chutes << chute
 
     chutou_uma_letra = chute.size == 1
@@ -48,34 +40,34 @@ def joga(nome, palavra_secreta)
       letra_procurada = chute[0]
       total_encontrado = palavra_secreta.count letra_procurada
       if total_encontrado == 0
-        puts "Letra não encontrada"
+        avisa_letra_nao_encontrada
         erros += 1
       elsif total_encontrado == 1
-        puts "Letra encontrada #{total_encontrado} vez"
+        letra_encontrada_uma_vez(total_encontrado)
       else
-        puts "Letra encontrada #{total_encontrado} vezes"
-    end
+        letra_encontrada_varias_vezes(total_encontrado)
+      end
     else
       acertou = chute == palavra_secreta
       if acertou
-        puts "Parabéns, você ganhou!"
+        avisar_acertou_a_palavra
         pontos_ate_agora += 100
         break
       else
-        puts "Que pena, errou"
+        avisa_errou_palavra
         pontos_ate_agora -= 30
         erros += 1
       end
     end
   end
-
-  puts "Você ganhou #{pontos_ate_agora} pontos"
+  avisa_pontos pontos_ate_agora
 end
 
-nome = da_boas_vindas
-palavra_secreta = escolhe_palavra_secreta
-
-loop do
-  joga nome, palavra_secreta
-  break if nao_quer_jogar
+def jogo_da_forca
+  nome = da_boas_vindas
+  palavra_secreta = escolhe_palavra_secreta
+  loop do
+    joga nome, palavra_secreta
+    break if nao_quer_jogar
+  end
 end
