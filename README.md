@@ -1,2 +1,2 @@
-# Ruby-Project-One
-Studying Projects using Ruby and RoR
+# HangMan-Game
+This is a Hangman Minigame developed using ruby
